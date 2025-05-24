@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Carousel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .carousel-container {
+            max-width: 800px;
+            width: 100%;
+            position: relative;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .carousel-wrapper {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
+        }
+
+        .carousel-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .carousel-slide .slide-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+            color: white;
+            padding: 40px 30px 30px;
+        }
+
+        .slide-content h2 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .slide-content p {
+            font-size: 1.1rem;
+            line-height: 1.5;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            color: #333;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .carousel-nav:hover {
+            background: white;
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .prev {
+            left: 20px;
+        }
+
+        .next {
+            right: 20px;
+        }
+
+        .carousel-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            padding: 20px;
+            background: white;
+        }
+
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ddd;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .indicator.active {
+            background: #667eea;
+            transform: scale(1.2);
+        }
+
+        .indicator:hover {
+            background: #764ba2;
+        }
+
+        .carousel-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 0 20px 20px;
+            background: white;
+        }
+
+        .control-btn {
+            padding: 10px 20px;
+            border: 2px solid #667eea;
+            background: transparent;
+            color: #667eea;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .control-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .control-btn.active {
+            background: #667eea;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .carousel-container {
+                margin: 10px;
+            }
+
+            .carousel-wrapper {
+                height: 300px;
+            }
+
+            .slide-content h2 {
+                font-size: 1.5rem;
+            }
+
+            .slide-content p {
+                font-size: 1rem;
+            }
+
+            .carousel-nav {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+
+            .prev {
+                left: 10px;
+            }
+
+            .next {
+                right: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="carousel-container">
+        <div class="carousel-wrapper">
+            <div class="carousel-slide active">
+                <img src="assets/img_1.jpeg" alt="Mountain Lake">
+                <div class="slide-content">
+                    <h2>Mountain Lake</h2>
+                    <p>Discover the serene beauty of crystal-clear mountain lakes surrounded by towering peaks and pristine wilderness.</p>
+                </div>
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/img_2.jpeg" alt="Ocean Sunset">
+                <div class="slide-content">
+                    <h2>Ocean Sunset</h2>
+                    <p>Experience the magical moments when the sun meets the ocean, painting the sky in brilliant colors.</p>
+                </div>
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/img_3.jpeg" alt="Forest Path">
+                <div class="slide-content">
+                    <h2>Forest Path</h2>
+                    <p>Walk through ancient forests where sunlight filters through the canopy, creating a natural cathedral.</p>
+                </div>
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/img_4.jpeg" alt="Desert Dunes">
+                <div class="slide-content">
+                    <h2>Desert Dunes</h2>
+                    <p>Explore the endless beauty of golden sand dunes that shift and change with the desert winds.</p>
+                </div>
+            </div>
+            <div class="carousel-slide">
+                <img src="assets/img_5.jpeg" alt="City Lights">
+                <div class="slide-content">
+                    <h2>City Lights</h2>
+                    <p>Marvel at the urban landscape as it comes alive with millions of lights creating a stunning nighttime panorama.</p>
+                </div>
+            </div>
+        </div>
+
+        <button class="carousel-nav prev" onclick="changeSlide(-1)">❮</button>
+        <button class="carousel-nav next" onclick="changeSlide(1)">❯</button>
+
+        <div class="carousel-indicators">
+            <span class="indicator active" onclick="currentSlide(1)"></span>
+            <span class="indicator" onclick="currentSlide(2)"></span>
+            <span class="indicator" onclick="currentSlide(3)"></span>
+            <span class="indicator" onclick="currentSlide(4)"></span>
+            <span class="indicator" onclick="currentSlide(5)"></span>
+        </div>
+
+        <div class="carousel-controls">
+            <button class="control-btn active" onclick="toggleAutoplay()">Auto Play</button>
+            <button class="control-btn" onclick="resetCarousel()">Reset</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlideIndex = 0;
+        let autoplayInterval;
+        let isAutoplayActive = true;
+
+        const slides = document.querySelectorAll('.carousel-slide');
+        const indicators = document.querySelectorAll('.indicator');
+        const autoplayBtn = document.querySelector('.control-btn');
+
+        // Initialize carousel
+        function initCarousel() {
+            showSlide(currentSlideIndex);
+            startAutoplay();
+        }
+
+        // Show specific slide
+        function showSlide(index) {
+            // Hide all slides
+            slides.forEach(slide => slide.classList.remove('active'));
+            indicators.forEach(indicator => indicator.classList.remove('active'));
+
+            // Show current slide
+            slides[index].classList.add('active');
+            indicators[index].classList.add('active');
+        }
+
+        // Change slide (next/previous)
+        function changeSlide(direction) {
+            currentSlideIndex += direction;
+
+            if (currentSlideIndex >= slides.length) {
+                currentSlideIndex = 0;
+            } else if (currentSlideIndex < 0) {
+                currentSlideIndex = slides.length - 1;
+            }
+
+            showSlide(currentSlideIndex);
+        }
+
+       
+        function currentSlide(index) {
+            currentSlideIndex = index - 1;
+            showSlide(currentSlideIndex);
+        }
+
+      
+        function startAutoplay() {
+            if (isAutoplayActive) {
+                autoplayInterval = setInterval(() => {
+                    changeSlide(1);
+                }, 2000);
+            }
+        }
+
+        
+        function stopAutoplay() {
+            clearInterval(autoplayInterval);
+        }
+
+      
+        function toggleAutoplay() {
+            const btn = document.querySelector('.control-btn');
+            
+            if (isAutoplayActive) {
+                stopAutoplay();
+                isAutoplayActive = false;
+                btn.textContent = 'Start Auto';
+                btn.classList.remove('active');
+            } else {
+                isAutoplayActive = true;
+                startAutoplay();
+                btn.textContent = 'Auto Play';
+                btn.classList.add('active');
+            }
+        }
+
+        
+        function resetCarousel() {
+            currentSlideIndex = 0;
+            showSlide(currentSlideIndex);
+            
+            if (!isAutoplayActive) {
+                toggleAutoplay();
+            }
+        }
+
+       
+        const carouselContainer = document.querySelector('.carousel-container');
+        carouselContainer.addEventListener('mouseenter', stopAutoplay);
+        carouselContainer.addEventListener('mouseleave', () => {
+            if (isAutoplayActive) {
+                startAutoplay();
+            }
+        });
+
+  
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                changeSlide(-1);
+            } else if (e.key === 'ArrowRight') {
+                changeSlide(1);
+            } else if (e.key === ' ') {
+                e.preventDefault();
+                toggleAutoplay();
+            }
+        });
+
+
+        let startX = 0;
+        let endX = 0;
+
+        carouselContainer.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+        });
+
+        carouselContainer.addEventListener('touchend', (e) => {
+            endX = e.changedTouches[0].clientX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = startX - endX;
+
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    changeSlide(1);
+                } else {
+                    changeSlide(-1); 
+                }
+            }
+        }
+
+        
+        initCarousel();
+    </script>
+</body>
+</html>
