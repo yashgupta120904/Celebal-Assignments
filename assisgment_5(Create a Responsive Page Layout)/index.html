@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Web Layout</title>
+    <style>
+        /* CSS Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+
+        /* Header Styles */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+        }
+
+        /* Navigation Styles - Flexbox Implementation */
+        .nav {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            margin: 0;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            background-color: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        /* Main Container - Grid Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 2rem;
+            min-height: calc(100vh - 200px);
+        }
+
+        /* Main Content Area */
+        .main-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .content-header {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .content-header h1 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .content-header p {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+
+        .content-section {
+            margin-bottom: 2rem;
+        }
+
+        .content-section h2 {
+            color: #34495e;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .content-section p {
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            transform: translateY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .sidebar h3 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 0.5rem;
+        }
+
+        .sidebar-list {
+            list-style: none;
+        }
+
+        .sidebar-item {
+            margin-bottom: 0.8rem;
+            padding: 0.8rem;
+            background: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-item:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .sidebar-link {
+            text-decoration: none;
+            color: #495057;
+            font-weight: 500;
+            display: block;
+        }
+
+        .sidebar-link:hover {
+            color: #667eea;
+        }
+
+        /* Footer Styles */
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: white;
+        }
+
+        /* Responsive Design - Media Queries */
+        @media screen and (max-width: 768px) {
+            .header-container {
+                padding: 0 1rem;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-menu {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #667eea;
+                flex-direction: column;
+                gap: 0;
+                padding: 1rem 0;
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            }
+
+            .nav-menu.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .nav-item {
+                width: 100%;
+            }
+
+            .nav-link {
+                display: block;
+                padding: 1rem 2rem;
+                border-radius: 0;
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+            }
+
+            /* Grid becomes single column on mobile */
+            .container {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+                gap: 1rem;
+            }
+
+            .main-content, .sidebar {
+                padding: 1.5rem;
+            }
+
+            .content-header h1 {
+                font-size: 2rem;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .container {
+                padding: 0.5rem;
+            }
+
+            .main-content, .sidebar {
+                padding: 1rem;
+            }
+
+            .content-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Tablet styles */
+        @media screen and (max-width: 1024px) and (min-width: 769px) {
+            .container {
+                grid-template-columns: 1fr 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <header class="header">
+        <div class="header-container">
+            <a href="#" class="logo">WebDesign Pro</a>
+            <nav class="nav">
+                <button class="menu-toggle" id="menuToggle">☰</button>
+                <ul class="nav-menu" id="navMenu">
+                    <li class="nav-item"><a href="#home" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="#about" class="nav-link">About</a></li>
+                    <li class="nav-item"><a href="#services" class="nav-link">Services</a></li>
+                    <li class="nav-item"><a href="#portfolio" class="nav-link">Portfolio</a></li>
+                    <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Container with Grid Layout -->
+    <div class="container">
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <div class="content-header">
+                <h1>Welcome to Modern Web Design</h1>
+                <p>Creating responsive, beautiful, and functional websites using the latest CSS techniques.</p>
+            </div>
+
+            <section class="content-section">
+                <h2>About Our Approach</h2>
+                <p>We specialize in creating modern, responsive web layouts that adapt seamlessly to all device sizes. Our approach combines the power of CSS Grid and Flexbox to create layouts that are both flexible and maintainable.</p>
+                
+                <p>This page demonstrates various CSS layout techniques including the box model for spacing control, flexible navigation with Flexbox, and a sophisticated grid system for content organization. The sticky positioning keeps important elements accessible while users scroll.</p>
+            </section>
+
+            <section class="content-section">
+                <h2>Key Features</h2>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h3>Responsive Design</h3>
+                        <p>Adapts to any screen size using CSS Grid and media queries</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Modern CSS</h3>
+                        <p>Uses Flexbox, Grid, and advanced positioning techniques</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Mobile First</h3>
+                        <p>Optimized for mobile devices with collapsible navigation</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2>Technical Implementation</h2>
+                <p>This layout showcases the box model with carefully controlled margins and padding throughout. The header uses sticky positioning to remain accessible during scrolling, while the main content area utilizes CSS Grid for a two-column layout that collapses to single column on mobile devices.</p>
+                
+                <p>The navigation menu demonstrates Flexbox capabilities with smooth transitions and a mobile-friendly collapse mechanism. Media queries ensure the design looks great on devices from smartphones to large desktop screens.</p>
+            </section>
+        </main>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h3>Quick Links</h3>
+            <ul class="sidebar-list">
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link">CSS Grid Guide</a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link">Flexbox Tutorial</a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link">Responsive Design Tips</a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link">Box Model Explained</a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link">Modern CSS Techniques</a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link">Mobile-First Approach</a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link">Performance Optimization</a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link">Accessibility Best Practices</a>
+                </li>
+            </ul>
+        </aside>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#" class="footer-link">Privacy Policy</a>
+                <a href="#" class="footer-link">Terms of Service</a>
+                <a href="#" class="footer-link">Support</a>
+                <a href="#" class="footer-link">Documentation</a>
+            </div>
+            <p>&copy; 2025 WebDesign Pro. All rights reserved. Built with modern CSS techniques.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle functionality
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+
+        menuToggle.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+            
+            // Change hamburger to X when active
+            if (navMenu.classList.contains('active')) {
+                menuToggle.innerHTML = '✕';
+            } else {
+                menuToggle.innerHTML = '☰';
+            }
+        });
+
+        // Close mobile menu when clicking on a link
+        const navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                navMenu.classList.remove('active');
+                menuToggle.innerHTML = '☰';
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.nav') && navMenu.classList.contains('active')) {
+                navMenu.classList.remove('active');
+                menuToggle.innerHTML = '☰';
+            }
+        });
+    </script>
+</body>
+</html>
